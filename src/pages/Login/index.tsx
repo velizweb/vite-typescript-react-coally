@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaDoorOpen } from "react-icons/fa";
 import { useAppContext } from "../../hooks/useAppContext";
 import { login } from "../../api";
