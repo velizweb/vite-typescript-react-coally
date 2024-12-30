@@ -12,7 +12,7 @@ type AppContextType = {
   taskCompleted: number;
   handleSetTasks: (tasks: Task[]) => void;
   handleAddTask: (task: Task) => void;
-  handleRemoveTask: (id: string | number | undefined) => void;
+  handleRemoveTask: (id: string) => void;
   handleToggleTask: (task: Task) => void;
   handleSelectedTask: (task: Task) => void;
   handleUpdateTask: (task: Task) => void;
@@ -39,7 +39,6 @@ function AppContextProvider({ children }: ContextProviderProps) {
     handleAddTask,
     handleRemoveTask,
     handleToggleTask,
-    handleLoading,
     handleSetTasks,
     handleSelectedTask,
     handleUpdateTask,

@@ -3,6 +3,7 @@ import { Task } from "../types";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useAppContext } from "../hooks/useAppContext";
 import { removeTask } from "../api";
+import { useAuth } from "../context/AuthContext";
 
 type TaskCardProps = {
   task: Task;
@@ -14,6 +15,7 @@ export function TaskCard({ task, handleUpdate }: TaskCardProps) {
     id: task._id || 0,
   });
   const { handleRemoveTask } = useAppContext();
+  const { token } = useAuth();
 
   const style = transform
     ? {
@@ -21,8 +23,8 @@ export function TaskCard({ task, handleUpdate }: TaskCardProps) {
       }
     : undefined;
 
-  const handleRemove = (task: string | number | undefined) => {
-    removeTask(task)
+  const handleRemove = (task: string) => {
+    removeTask(task, token as string)
       .then(() => {
         handleRemoveTask(task);
       })
@@ -57,7 +59,7 @@ export function TaskCard({ task, handleUpdate }: TaskCardProps) {
         </button>
         <button type="button"
           className="bg-red-500 text-white p-2 rounded-md"
-          onClick={() => handleRemove(task._id)}
+          onClick={() => handleRemove(task._id as string)}
         >
           <FaTrash />
         </button>

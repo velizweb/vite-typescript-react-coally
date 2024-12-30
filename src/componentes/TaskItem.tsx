@@ -3,6 +3,7 @@ import { Task } from "../types";
 import { useAppContext } from "../hooks/useAppContext";
 import { removeTask, updateTask } from "../api";
 import { toast } from "react-toastify";
+import { useAuth } from "../context/AuthContext";
 
 type Props = {
   task: Task;
@@ -11,9 +12,10 @@ type Props = {
 
 const TaskItem = ({ task, handleUpdate }: Props) => {
   const { handleRemoveTask, handleToggleTask } = useAppContext();
+  const { token } = useAuth();
 
-  const handleRemove = (task: string | number | undefined) => {
-    removeTask(task)
+  const handleRemove = (task: string) => {
+    removeTask(task, token as string)
       .then(() => {
         handleRemoveTask(task);
         toast.error("Tarea eliminada", {
@@ -35,7 +37,7 @@ const TaskItem = ({ task, handleUpdate }: Props) => {
     task: Task
   ) => {
     const taskUpdate: Task = { ...task, state: e.target.checked };
-    updateTask(taskUpdate)
+    updateTask(taskUpdate, token as string)
       .then(() => {
         handleToggleTask(taskUpdate);
         toast.success("Estado de la tarea modificada", {
@@ -76,7 +78,7 @@ const TaskItem = ({ task, handleUpdate }: Props) => {
           </button>
           <button
             className="bg-red-500 text-white p-2 rounded-md"
-            onClick={() => handleRemove(task._id)}
+            onClick={() => handleRemove(task._id as string)}
           >
             <FaTrash />
           </button>

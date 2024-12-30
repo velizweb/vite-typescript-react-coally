@@ -5,7 +5,7 @@ import { useAuth } from "../context/AuthContext";
 
 const Header = () => {
   const { user, hanldeLogin } = useAppContext();
-  const { setToken, setUserS} = useAuth();
+  const { setToken, setUserS, userStora} = useAuth();
 
   const handleLogout = () => {
     setToken("");
@@ -31,7 +31,7 @@ const Header = () => {
           </svg>
           <span className="ml-3 text-xl">Task Manager</span>
         </a>
-        {user.email && (
+        { userStora && (
           <>
             <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
               <Link to="/dashboard" className="mr-5 hover:text-gray-900">
@@ -52,8 +52,8 @@ const Header = () => {
                   className="inline-block size-10 rounded-full ring-2 ring-white"
                 />
                 <div className="flex flex-col ">
-                  <p className="text-sm font-bold">Alberto Veliz</p>
-                  <p className="text-sm">velizweb@gmail.com</p>
+                  <p className="text-sm font-bold">{user.name}</p>
+                  <p className="text-sm">{user.email}</p>
                 </div>
               </div>
             </nav>

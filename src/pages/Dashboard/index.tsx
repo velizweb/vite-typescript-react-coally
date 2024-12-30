@@ -4,12 +4,14 @@ import { useEffect } from "react";
 import { Task } from "../../types";
 import TaskList from "../../componentes/TaskList";
 import FormTask from "../../componentes/FormTask";
+import { useAuth } from "../../context/AuthContext";
 
 const Dashboard = () => {
   const { handleSetTasks, taskTotal, taskPending, taskCompleted } = useAppContext();
+  const { token } = useAuth();
 
   useEffect(() => {
-    fetchTask()
+    fetchTask(token as string)
       .then((data: Task[]) => {
         handleSetTasks(data);
       })

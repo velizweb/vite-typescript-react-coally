@@ -11,6 +11,7 @@ import {
 import { Column } from "../../componentes/Collumn";
 import { fetchTask, updateTask } from "../../api";
 import FormTask from "../../componentes/FormTask";
+import { useAuth } from "../../context/AuthContext";
 
 const COLUMNS: ColumnType[] = [
   { id: "PENDING", title: "Pendientes", state: false },
@@ -26,8 +27,11 @@ const TaskTable = () => {
     handleSetTasks,
     handleToggleTask,
   } = useAppContext();
+
+  const { token } = useAuth();
+
   useEffect(() => {
-    fetchTask()
+    fetchTask(token as string)
       .then((data: Task[]) => {
         handleSetTasks(data);
       })
@@ -60,7 +64,7 @@ const TaskTable = () => {
     if (taskSelected) {
       const taskUpdate: Task = { ...taskSelected, state: newStatus?.state };
 
-      updateTask(taskUpdate)
+      updateTask(taskUpdate, token as string)
         .then(() => handleToggleTask(taskUpdate))
         .catch((error) => console.error("Failed to updated Task:", error));
 

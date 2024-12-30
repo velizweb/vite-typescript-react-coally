@@ -1,7 +1,6 @@
-import { useAuth } from "../context/AuthContext";
 import { Task } from "../types";
 
-const { token } = useAuth();
+
 const api_url = import.meta.env.VITE_BACKEND_URL;
 
 export async function login({
@@ -32,7 +31,7 @@ export async function login({
   }
 }
 
-export async function fetchTask() {
+export async function fetchTask(token:string) {
   try {
     const response = await fetch(`${api_url}/task`, {
       headers: {
@@ -46,12 +45,13 @@ export async function fetchTask() {
   }
 }
 
-export async function addTask(task: Task) {
+export async function addTask(task: Task, token:string) {
   try {
     const response = await fetch(`${api_url}/task`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(task),
     });
@@ -62,7 +62,7 @@ export async function addTask(task: Task) {
   }
 }
 
-export async function updateTask(task: Task) {
+export async function updateTask(task: Task, token:string) {
   try {
     const response = await fetch(
       `${api_url}/task/${task._id}`,
@@ -70,6 +70,7 @@ export async function updateTask(task: Task) {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(task),
       }
@@ -81,10 +82,13 @@ export async function updateTask(task: Task) {
   }
 }
 
-export async function removeTask(task: string | number | undefined) {
+export async function removeTask(task: string, token:string) {
   try {
     const response = await fetch(`${api_url}/task/${task}`, {
       method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     const data = await response.json();
     return data;

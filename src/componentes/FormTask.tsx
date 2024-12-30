@@ -4,9 +4,11 @@ import { addTask, updateTask } from "../api";
 import { Task } from "../types";
 import { FaPlus } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useAuth } from "../context/AuthContext";
 
 const FormTask = () => {
   const { handleAddTask, taskUpdate, handleUpdateTask } = useAppContext();
+  const { token } = useAuth();
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
 
@@ -15,7 +17,7 @@ const FormTask = () => {
 
     if (taskUpdate._id) {
       const taskUpdated: Task = { ...taskUpdate, title, description };
-      updateTask(taskUpdated)
+      updateTask(taskUpdated, token as string)
         .then((data: Task) => {
           handleUpdateTask(data);
           setTitle("");
@@ -38,7 +40,7 @@ const FormTask = () => {
     }
       
 
-    addTask({ title, description, state: false })
+    addTask({ title, description, state: false }, token as string)
       .then((data: Task) => {
         handleAddTask(data);
         setTitle("");
