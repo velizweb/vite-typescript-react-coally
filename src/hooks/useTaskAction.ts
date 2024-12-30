@@ -1,5 +1,4 @@
-import { useEffect, useReducer } from "react"
-//import { initialState, taskReducer } from "../reducer/reducer"
+import { useReducer } from "react"
 import { initialState, reducer } from "../reducer"
 import { ActionTypes } from "../actions"
 import { Task, User } from "../types"
@@ -10,9 +9,6 @@ export const useTaskAction = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const { task, taskUpdate, user } = state;
-  /*useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(state.tasks))
-  }, [state.task])*/
   
 
   const taskTotal = task.length;

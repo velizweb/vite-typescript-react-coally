@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Task, Column as ColumnType } from "../../types";
 import { useAppContext } from "../../hooks/useAppContext";
 import {
